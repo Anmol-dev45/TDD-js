@@ -7,4 +7,6 @@ test("caesarCipher", () => {
   expect(caesarCipher("hello", 5)).toBe("mjqqt");
   expect(caesarCipher("hello world")).toBe("hello world");
   expect(caesarCipher("z", 1)).toBe("a");
+
+  expect(caesarCipher("A", -2)).not.toBe("A");
 });
