@@ -4,36 +4,40 @@ const LOWERCASE_A = 97;
 const LOWERCASE_Z = 122;
 const TOTAL_ALPHABETS = 26;
 
-const isCapitalChar = (char) => char.match(/[A-Z]/);
-const isLowerChar = (char) => char.match(/[a-z]/);
+function caesarCipher(str, shift = 0) {
+  let result = "";
 
-const toValidChar = (code, type) => {
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (char.match(/[A-Z]/)) {
+      result += toValidChar(
+        char.charCodeAt(0) + shift,
+        CAPITALCASE_A,
+        CAPITALCASE_Z
+      );
+    } else if (char.match(/[a-z]/)) {
+      result += toValidChar(
+        char.charCodeAt(0) + shift,
+        LOWERCASE_A,
+        LOWERCASE_Z
+      );
+    } else {
+      result += char;
+    }
+  }
+
+  return result;
+}
+
+function toValidChar(code, min, max) {
   let newCode = code;
-  if (code > type.max) {
-    while (newCode > type.max) newCode -= TOTAL_ALPHABETS;
-  } else if (code < type.min) {
-    while (newCode < type.min) newCode += TOTAL_ALPHABETS;
+  if (code > max) {
+    while (newCode > max) newCode -= TOTAL_ALPHABETS;
+  } else if (code < min) {
+    while (newCode < min) newCode += TOTAL_ALPHABETS;
   }
   return String.fromCharCode(newCode);
-};
-
-function caesarCipher(str, shift = 0) {
-  return str
-    .split("")
-    .map((char) => {
-      if (isCapitalChar(char))
-        return toValidChar(char.charCodeAt(0) + shift, {
-          min: CAPITALCASE_A,
-          max: CAPITALCASE_Z,
-        });
-      else if (isLowerChar(char))
-        return toValidChar(char.charCodeAt(0) + shift, {
-          min: LOWERCASE_A,
-          max: LOWERCASE_Z,
-        });
-      else return char;
-    })
-    .join("");
 }
 
 module.exports = caesarCipher;
