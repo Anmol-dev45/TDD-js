@@ -1,4 +1,5 @@
 function analyzeArray(arr) {
+  if (arr.length === 0) return null;
   return {
     average: avg(arr),
     min: min(arr),
